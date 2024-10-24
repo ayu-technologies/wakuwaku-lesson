@@ -8,12 +8,16 @@ def merge_markdown(main_file, output_file):
     
     with open(main_file, 'r', encoding='utf-8') as mf, open(output_file, 'w', encoding='utf-8') as of:
         lines = mf.readlines()
-        for line in lines:
+        for line_num, line in enumerate(lines, start=1):
             stripped_line = line.strip()
-            if stripped_line.endswith('.md') and os.path.isfile(stripped_line):
-                with open(stripped_line, 'r', encoding='utf-8') as infile:
-                    content = infile.read()
-                    of.write(content + '\n\n---\n\n')  # 水平線で区切る
+            if stripped_line.endswith('.md'):
+                if os.path.isfile(stripped_line):
+                    with open(stripped_line, 'r', encoding='utf-8') as infile:
+                        content = infile.read()
+                        of.write(content + '\n\n---\n\n')  # 水平線で区切る
+                else:
+                    print(f"エラー: 行 {line_num} で指定されたファイル '{stripped_line}' が存在しません。")
+                    sys.exit(1)
             else:
                 of.write(line)  # ヘッダーやその他の行をそのまま書き込む
     print(f"マージが完了しました。出力ファイル: {output_file}")

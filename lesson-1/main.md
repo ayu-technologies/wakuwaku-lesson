@@ -4,7 +4,7 @@ about_Arduino.md
 
 # ハードウェアの基本知識
 
-about_heardware.md
+about_hardware.md
 
 # プログラミング環境をつくる
 
